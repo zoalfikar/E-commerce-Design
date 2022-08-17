@@ -1,17 +1,81 @@
 <!DOCTYPE html>
-<html lang="">
-  <head>
+<html lang="en">
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
+<strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+</noscript>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+    <!-- <!-- built files will be auto injected -->
+    <script>
+        function camouflage(i) {
+            var canvas = document.createElement("canvas");
+            canvas.width = i.getBoundingClientRect().width;
+            canvas.height = i.getBoundingClientRect().height;
+            canvas.style.left = i.getBoundingClientRect().left + "px";
+            canvas.style.top = i.getBoundingClientRect().top + "px";
+            var parent = i.parentElement;
+            var parent2 = parent.parentElement;
+            var parent3 = parent2.parentElement;
+
+            parent.replaceChild(canvas, i);
+            var context = canvas.getContext('2d');
+            context.drawImage(i, 0, 0, canvas.width, canvas.height);
+            // alert("this is th result" + edgeColorAverage(canvas) + " blue is#0000FF");
+            parent3.style.backgroundColor = edgeColorAverage(canvas);
+            // parent3.style.backgroundColor = "rgb(225,225,225)";
+            // edgeColorAverage(canvas);
+        }
+
+
+        // function rgbToHex(r, g, b) {
+
+        //     return ((r << 16) | (b << 8) | (b)).toString(16);
+        // }
+
+        function edgeColorAverage(c) {
+            var red = 0;
+            var green = 0;
+            var blue = 0;
+
+            var x = parseInt(c.style.left);
+            var y = parseInt(c.style.top);
+            for (let index = x; index < (x + parseInt(c.width)); index++) {
+                var {
+                    data
+                } = c.getContext('2d').getImageData(700, 5, 1, 1);
+                red += data[0];
+                // alert(red);
+                green += data[1];
+                // alert(green);
+                blue += data[2];
+                // alert(blue);
+            }
+
+            red = red / c.width;
+            green = green / c.width;
+            blue = blue / c.width;
+            // let hex = "#" + ("000000" + rgbToHex(red, green, blue)).slice(-6);
+
+            return "rgb(" + red + "," + green + "," + blue + ")";
+        }
+    </script>
+</body>
+
 </html>
